@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UMass Mental Help</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <h1>Welcome to UHelp Website</h1>
+    <img src="{{ url_for('static', filename='UMASS.png') }}" width="300" height="246" alt="Label">
+
+    <h2> What problems can I help you with</h2>
+    <form action="/generate" method="post">
+        <label for="userText">Please enter your concerns:</label>
+        <textarea id="user_input" name="user_input" rows=4 cols="50">{{ user_input }}</textarea>
+        <br>
+        <button type="submit">Generate</button>
+    </form>
+
+    {% if generated_text %}
+    <h2>Generated Text:</h2>
+    <p>{{ generated_text }}</p>
+    {% endif %}
+    <br>
+
+    <h2>Upload an Image</h2>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" id="imageInput" name="image" accept="image/*" required>
+        <button type="submit">Submit Image</button>
+    </form>
+
+    {% if image_text %}
+    <h2>Extracted Text from Image:</h2>
+    <p>{{ image_text }}</p>
+    {% endif %}
+    <br>
+
+</body>
+
+</html>
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UMass Mental Help</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.min.js"></script>
+</head>
+<body>
+    <h1>Welcome to UHelp Website</h1>
+    <img src="{{ url_for('static', filename='UMASS.png') }}" width="300" height="246" alt="Label">
+
+    <h2>What problems can I help you with?</h2>
+    <label for="userText">Please enter your concerns:</label>
+    <textarea id="user_input" rows="4" cols="50"></textarea>
+    <br>
+    <button onclick="generateText()">Generate</button>
+
+    <h2 id="generated_text_heading" style="display:none;">Generated Text:</h2>
+    <p id="generated_text"></p>
+    <br>
+
+    <h2>Upload an Image</h2>
+    <input type="file" id="imageInput" accept="image/*" required>
+    <button onclick="uploadImage()">Submit Image</button>
+
+    <h2 id="image_text_heading" style="display:none;">Extracted Text from Image:</h2>
+    <p id="image_text"></p>
+
+    <script>
+        const socket = io();
+
+        // Function to handle text generation through WebSocket
+        function generateText() {
+            const userInput = document.getElementById("user_input").value;
+            socket.emit("generate", { user_input: userInput });
+        }
+
+        // Listen for the server response with the generated text
+        socket.on("generated_text_response", function(data) {
+            document.getElementById("generated_text_heading").style.display = "block";
+            document.getElementById("generated_text").textContent = data.generated_text;
+        });
+
+        // Function to handle image upload through WebSocket
+        function uploadImage() {
+            const imageInput = document.getElementById("imageInput").files[0];
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                const base64Image = e.target.result.split(",")[1]; // Get base64 string without prefix
+                socket.emit("upload_image", { image: base64Image });
+            };
+
+            if (imageInput) {
+                reader.readAsDataURL(imageInput); // Convert image to base64
+            }
+        }
+
+        // Listen for the server response with extracted image text
+        socket.on("image_response", function(data) {
+            document.getElementById("image_text_heading").style.display = "block";
+            document.getElementById("image_text").textContent = data.generated_text;
+        });
+    </script>
+</body>
+</html> -->
