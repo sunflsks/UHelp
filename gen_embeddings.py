@@ -8,13 +8,14 @@ import time
 import itertools
 import os
 import requests
+from key import key
 
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
 }
 
 def get_chunks():
-    for root, dirs, files in os.walk("/Users/sunchipnacho/Temp/umass"):
+    for root, dirs, files in os.walk("site"):
         for file in files:
             try:
                 with open(os.path.join(root, file), "r") as f:
@@ -55,5 +56,6 @@ offset = 0
 collection = get_collection()
 
 for chunks in itertools.batched(chunks, 90):
-    embed_chunks(list(chunks), collection, offset)
+    val = chunks[90]
+    embed_chunks(chunks, collection, offset)
     offset += 90
