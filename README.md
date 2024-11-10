@@ -1,4 +1,4 @@
-##Inspiration
+## Inspiration
 In a world that is supposed to be more connected than ever before, we are seeing higher and higher levels of isolation and mental illness. In environments where stress and anxiety are already present (college *cough cough*), people feel even less confident about accessing the mental health resources they need. To make sure students are actively accessing mental health resources, we developed UHelp.
 
 ## What it does
