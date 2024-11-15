@@ -1,45 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UMass Mental Help</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>UHelp</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 
 <body>
-    <h1>Welcome to UHelp Website</h1>
+    <h1>Welcome to UHelp!</h1>
     <img src="{{ url_for('static', filename='UMASS.png') }}" width="300" height="246" alt="Label">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
-    <h2> What problems can I help you with</h2>
+    <h2>Enter text below to find local support.</h2>
     <form action="/generate" method="post">
         <label for="userText">Please enter your concerns:</label>
         <textarea id="user_input" name="user_input" rows=4 cols="50">{{ user_input }}</textarea>
         <br>
-        <button type="submit">Generate</button>
+        <button type="submit">Find Help</button>
     </form>
 
     {% if generated_text %}
-    <h2>Generated Text:</h2>
-    <p>{{ generated_text }}</p>
+    <h2>How To Get Help:</h2>
+    <p id="generated_text" class="bordered"></p>
+    <script>
+        document.getElementById("generated_text").innerHTML = marked.parse(`{{ generated_text }}`);
+    </script>
     {% endif %}
     <br>
 
-    <h2>Upload an Image</h2>
+    <h2>Or upload an image.</h2>
     <form action="/upload" method="post" enctype="multipart/form-data">
         <input type="file" id="imageInput" name="image" accept="image/*" required>
         <button type="submit">Submit Image</button>
     </form>
 
     {% if image_text %}
-    <h2>Extracted Text from Image:</h2>
-    <p>{{ image_text }}</p>
+    <h2>How To Get Help:</h2>
+    <p id="image_text" class="bordered"></p>
+    <script>
+        document.getElementById("image_text").innerHTML = marked.parse(`{{ image_text }}`);
+    </script>
     {% endif %}
-    <br>
 
 </body>
+
+<div class="footer">Built by Sudhip, Braeden, Kushaan and Abhinav; 2024</div>
 
 </html>
 
@@ -105,9 +112,4 @@
 
         // Listen for the server response with extracted image text
         socket.on("image_response", function(data) {
-            document.getElementById("image_text_heading").style.display = "block";
-            document.getElementById("image_text").textContent = data.generated_text;
-        });
-    </script>
-</body>
-</html> -->
+            document.getElementById("image_te

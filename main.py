@@ -59,8 +59,8 @@ def upload_image():
 
 
 def convert_image(image):
-    # Load the image
 
+    # Load the image
     user_image = np.array(image)
 
     # Convert to grayscale
